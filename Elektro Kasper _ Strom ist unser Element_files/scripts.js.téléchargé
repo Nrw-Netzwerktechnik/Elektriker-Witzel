@@ -1,0 +1,77 @@
+var jQuery = jQuery ? jQuery : $;
+
+
+jQuery(document).ready(function ($) {
+
+	$(document).foundation();
+
+	//$(".gallery-item a").fancybox();
+
+	$(".size-menu").on("click", "button" ,function(){
+		var value = $(this).val(),
+			baseFontSize = $("html").css("font-size"),
+			wrapper = $(".wrapper"),
+			fontSize;
+
+
+		// remove px
+		baseFontSize = baseFontSize.slice(0, 2);
+		baseFontSize = parseInt(baseFontSize, 10);
+
+		fontSize = baseFontSize * value;
+
+		wrapper.css("font-size", fontSize);
+
+	});
+
+   $('#simple-menu').sidr();
+     $('body').bind('touchend click',function (e) {
+      if ($(e.target).parents('#sidr').length==0) {
+       $.sidr('close', 'sidr');
+       //console.log('closing');
+      } else {
+       //console.log('nothing');
+      }
+     });
+
+
+
+	// Menu Sort
+	var $categorySort = $(".category-sort");
+
+
+
+	// find witch is active and toggle and add active class
+	var currentUrl  = document.URL,
+		categoryLinks = $categorySort.find('a');
+
+	$categorySort.on("click", 'h2', function(ev){
+		var $activecategory = $(this);
+		$activecategory.siblings("ul").slideToggle();
+		$activecategory.toggleClass("active");
+	});
+
+
+
+	// find current active url and toggle ul
+	$categorySort.find("a.active")
+		.parents('ul').show()
+		.siblings('h2').addClass('active');
+
+	if( ! $categorySort.find("a.active").length ){
+		$categorySort.find("a")
+			.first()
+			.parents('ul').show()
+			.siblings('h2').addClass('active');
+	}
+
+	$(".main-slider").slick({
+		dots: true,
+		fade: true,
+		arrows: false,
+		autoplay: true,
+		autoplaySpeed: 4000
+	});
+
+
+});
